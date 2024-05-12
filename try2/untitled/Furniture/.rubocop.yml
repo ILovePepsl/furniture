@@ -1,0 +1,12 @@
+# .rubocop.yml
+require: rubocop-rails
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - 'db/schema.rb'
+    - 'bin/*'
+    - 'node_modules/**/*'
+
+Rails:
+  Enabled: true

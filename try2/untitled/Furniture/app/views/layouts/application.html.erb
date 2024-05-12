@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Furniture</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag 'application', 'data-turbo-track': 'reload' %>
+  <%= javascript_importmap_tags %>
+</head>
+<body>
+<div class="header">
+  <% if user_signed_in? %>
+    <div>
+      Logged in as: <%= current_user.email %>
+      <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
+      | <%= link_to 'My Orders', orders_path %>
+      | <%= link_to 'Cart', cart_path(current_user.cart) %>
+      <% if current_user.admin? %>
+        | <%= link_to 'Admin Panel', '/admin' %>
+      <% end %>
+    </div>
+  <% else %>
+    <div>
+      <%= link_to 'Log in', new_user_session_path %> |
+      <%= link_to 'Sign up', new_user_registration_path %>
+    </div>
+  <% end %>
+
+  <!-- Language Selector -->
+  <div class="language-selector">
+    <%= link_to "English", locale: "en" %>
+    |
+    <%= link_to "Русский", locale: "ru" %>
+  </div>
+</div>
+
+<%= yield %>
+</body>
+</html>

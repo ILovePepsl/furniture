@@ -1,0 +1,25 @@
+<!-- app/views/products/index.html.erb -->
+<h1><%= t('products.collection_heading') %></h1>
+
+<div class="products">
+  <% @products.each do |product| %>
+    <div class="product">
+      <h3><%= link_to product.name, product_path(product) %></h3>
+      <p><%= product.description %></p>
+      <p><%= t('products.price') %>: $<%= product.price %></p>
+      <% if product.image.attached? %>
+        <img src="<%= url_for(product.image) %>" alt="<%= product.name %>">
+      <% else %>
+        <p><%= t('products.no_image') %></p>
+      <% end %>
+
+      <% if user_signed_in? %>
+        <%= button_to t('products.add_to_cart'), add_product_cart_path(current_user.cart), method: :post, params: { product_id: product.id } %>
+      <% else %>
+        <%= link_to t('products.login_to_add'), new_user_session_path %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<%= paginate @products %>

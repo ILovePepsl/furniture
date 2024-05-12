@@ -1,0 +1,33 @@
+<!-- app/views/orders/show.html.erb -->
+<h1>Order Details</h1>
+
+<div class="order-details">
+  <p><strong>User:</strong> <%= @order.user.email %></p>
+  <p><strong>Total Price:</strong> <%= number_to_currency(@order.total_price) %></p>
+  <p><strong>Status:</strong> <%= @order.status %></p>
+  <p><strong>First Name:</strong> <%= @order.first_name %></p>
+  <p><strong>Last Name:</strong> <%= @order.last_name %></p>
+  <p><strong>Phone:</strong> <%= @order.phone %></p>
+  <p><strong>Address:</strong> <%= @order.address %></p>
+  <p><strong>Date:</strong> <%= @order.created_at.strftime("%B %d, %Y") %></p>
+</div>
+
+<h2>Products in this Order</h2>
+<table class="products-table">
+  <thead>
+  <tr>
+    <th>Product Name</th>
+    <th>Quantity</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @order_products.each do |order_product| %>
+    <tr>
+      <td><%= order_product.product.name %></td>
+      <td><%= order_product.quantity %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Back to orders', orders_path, class: "button" %>

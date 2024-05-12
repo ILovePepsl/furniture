@@ -1,0 +1,38 @@
+ru:
+  greetings:
+    welcome: "Добро пожаловать в наш магазин мебели"
+  products:
+    collection_heading: "Наша коллекция мебели"
+    price: "Цена"
+    no_image: "Изображение отсутствует"
+    add_to_cart: "Добавить в корзину"
+    login_to_add: "Войдите, чтобы добавить в корзину"
+  carts:
+    show:
+      title: "Ваша корзина"
+      product: "Продукт"
+      price: "Цена"
+      quantity: "Количество"
+      action: "Действие"
+      update: "Обновить"
+      remove: "Удалить"
+      total: "Итого"
+      place_order: "Оформить заказ"
+      empty_cart: "Ваша корзина пуста."
+      continue_shopping: "Продолжить покупки"
+      first_name: "Имя"
+      last_name: "Фамилия"
+      phone: "Телефон"
+      address: "Адрес"
+      place_order_button: "Оформить заказ"
+  authorization:
+    not_authorized: "Вы не имеете доступа к этой странице."
+  orders:
+    index:
+      title: "Ваши заказы"
+      no_orders: "У вас еще нет заказов."
+      order_id: "ID заказа"
+      total_price: "Общая стоимость"
+      status: "Статус"
+      date: "Дата"
+      back_to_main: "На главную"
