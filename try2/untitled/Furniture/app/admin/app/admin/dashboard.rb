@@ -7,7 +7,6 @@ ActiveAdmin.register_page "Dashboard" do
       end
     end
 
-    # Добавьте свои секции здесь, например, простая панель:
     panel "Recent Products" do
       ul do
         Product.recent(5).map do |product|

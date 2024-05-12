@@ -1,10 +1,9 @@
-# app/models/user.rb
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
   has_one :cart, dependent: :destroy
-  has_many :orders  # Добавить эту строку для связи пользователя с заказами
+  has_many :orders
 
   after_create :create_cart_for_user
 

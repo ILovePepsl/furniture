@@ -1,4 +1,3 @@
-# app/admin/orders.rb
 ActiveAdmin.register Order do
   permit_params :first_name, :last_name, :phone, :address, :total_price, :status
 
