@@ -1,0 +1,61 @@
+<div class="collection-container" style="background-color: <%= @collection.background_color || '#f9f9f9' %>; color: <%= @collection.text_color || '#333' %>;">
+  <div class="collection-header">
+    <h1 style="color: <%= @collection.title_color || '#333' %>;"><%= @collection.name %></h1>
+    <div class="buttons">
+      <% if user_signed_in? %>
+        <%= button_to "#{t('collections.buy')} #{currency_symbol(current_user.currency)}#{number_to_currency(convert_price(@collection.total_price), unit: '')}", add_all_to_cart_collection_path(@collection), method: :post, class: 'button add-all-to-cart-button' %>
+      <% end %>
+      <% if user_signed_in? && (current_user.admin? || current_user == @collection.user) %>
+        <%= link_to t('collections.edit'), edit_collection_path(@collection), class: 'button' %>
+        <%= link_to t('collections.delete'), @collection, method: :delete, data: { confirm: t('collections.are_you_sure') }, class: 'button delete-button' %>
+      <% end %>
+    </div>
+  </div>
+  <p><%= t('collections.by') %> <%= link_to @collection.user.name, user_path(@collection.user), style: "color: #{@collection.text_color || '#333'};" %></p>
+
+  <h2><%= t('collections.products_in_collection') %></h2>
+  <div class="products-grid">
+    <% @collection.products.each do |product| %>
+      <div class="product-card" style="background-color: <%= @collection.product_card_background_color || '#fff' %>;">
+        <div class="product-header">
+          <h3><%= link_to product.name, product_path(product), style: "color: #{@collection.text_color || '#333'};" %></h3>
+          <div class="product-rating">
+            <% average_rating = product.reviews.any? ? product.average_rating : '-' %>
+            <% review_count = product.reviews.count %>
+            <span class="rating-value"><%= average_rating %> ★</span>
+            <span class="rating-count">(<%= review_count %>)</span>
+          </div>
+        </div>
+        <p class="product-description" style="color: <%= @collection.product_description_color || '#666' %>;"><%= product.description %></p>
+        <% if product.image.attached? %>
+          <div class="product-image">
+            <img src="<%= url_for(product.image) %>" alt="<%= product.name %>">
+          </div>
+        <% else %>
+          <p class="no-image"><%= t('products.no_image') %></p>
+        <% end %>
+        <div class="product-info">
+          <span class="product-price" style="color: <%= @collection.product_price_color || '#333' %>;">
+            <%= currency_symbol(current_user.currency) %><%= number_to_currency(convert_price(product.price), unit: '') %>
+          </span>
+          <% if user_signed_in? && (current_user.admin? || product.manufacturer == current_user) %>
+            <div class="buttons">
+              <%= button_to t('collections.remove_from_collection'), collection_product_path(@collection, product), method: :delete, class: 'button delete-button' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <% if user_signed_in? && (current_user.admin? || current_user == @collection.user) %>
+    <div class="add-product-form">
+      <h2><%= t('collections.add_product_to_collection') %></h2>
+      <%= form_with url: collection_products_path(@collection), local: true do |form| %>
+        <%= form.label :product_id, t('collections.select_product') %>
+        <%= form.collection_select :product_id, current_user.admin? ? Product.all : current_user.products, :id, :name, include_blank: true, class: 'form-control' %>
+        <%= form.submit t('collections.add_product'), class: 'button' %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

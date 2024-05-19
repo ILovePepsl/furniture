@@ -1,12 +1,81 @@
-<p style="color: green"><%= notice %></p>
+<div class="product-detail">
+  <h1 class="product-name"><%= @product.name %></h1>
+  <p class="product-description"><%= @product.description %></p>
 
-<h1><%= @product.name %></h1>
-<p><%= @product.description %></p>
-<p>Price: $<%= @product.price %></p>
-<% if @product.image.attached? %>
-  <img src="<%= url_for(@product.image) %>" alt="<%= @product.name %>">
-<% end %>
+  <% if @product.image.attached? %>
+    <div class="product-image">
+      <img src="<%= url_for(@product.image) %>" alt="<%= @product.name %>">
+    </div>
+  <% end %>
 
-<div>
-  <%= link_to "Back to products", products_path %>
+  <% if @product.category.present? %>
+    <p class="product-category">
+      <span><%= t('products.category') %>:</span>
+      <%= link_to @product.category.name, category_path(@product.category), class: "category-link" %>
+    </p>
+  <% end %>
+
+  <% if @product.manufacturer.present? %>
+    <p class="product-category">
+      <span><%= t('products.manufacturer') %>:</span>
+      <%= link_to @product.manufacturer.name, user_path(@product.manufacturer), class: "category-link" %>
+    </p>
+  <% else %>
+    <p class="product-category"><%= t('products.no_manufacturer') %></p>
+  <% end %>
+
+  <% if user_signed_in? %>
+    <p class="product-price"><%= t('products.price') %>: <%= currency_symbol(current_user.currency) %><%= number_to_currency(@converted_price, unit: '') %></p>
+  <% else %>
+    <p class="product-price"><%= t('products.price') %>: ₴<%= number_to_currency(@product.price, unit: '') %></p>
+  <% end %>
+
+  <p class="average-rating"><%= t('products.average_rating') %>: <%= @product.reviews.any? ? @product.average_rating : t('products.not_enough_ratings') %></p>
+
+  <% if user_signed_in? %>
+    <%= button_to t('products.add_to_cart'), add_product_cart_path(current_user.cart), method: :post, params: { product_id: @product.id }, class: "add-to-cart-button" %>
+    <%= button_to t('products.add_to_wishlist'), add_product_wishlist_path, method: :post, params: { product_id: @product.id }, class: "add-to-wishlist-button" %>
+  <% else %>
+    <%= link_to t('products.login_to_add'), new_user_session_path, class: "login-to-add-link" %>
+  <% end %>
+
+  <% if user_signed_in? && current_user == @product.manufacturer %>
+    <%= link_to t('products.edit_product'), edit_product_path(@product), class: "edit-product-button" %>
+  <% end %>
+
+  <div class="reviews-section">
+    <h2><%= t('products.reviews') %></h2>
+    <% @product.reviews.each do |review| %>
+      <div class="review">
+        <div class="review-header">
+          <strong><%= link_to (review.user.name.present? ? review.user.name : "#{t('products.user')} ##{review.user.id}"), user_path(review.user) %></strong>
+          <span class="review-rating"><%= t('products.rating') %>: <span class="rating rating-<%= review.rating %>"><%= review.rating %>/5</span></span>
+        </div>
+        <p class="review-comment"><%= review.comment %></p>
+        <% if user_signed_in? && (review.user == current_user || current_user.admin?) %>
+          <%= link_to t('products.delete_review'), product_review_path(@product, review), method: :delete, data: { confirm: t('products.are_you_sure') }, class: 'delete-review-button' %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% if user_signed_in? && !@product.reviews.exists?(user_id: current_user.id) %>
+      <div class="review-form">
+        <%= form_for([@product, Review.new]) do |f| %>
+          <div class="field">
+            <%= f.label :rating, t('products.rating') %>
+            <%= f.number_field :rating, in: 1..5 %>
+          </div>
+          <div class="field">
+            <%= f.label :comment, t('products.comment') %>
+            <%= f.text_area :comment %>
+          </div>
+          <%= f.submit t('products.submit_review'), class: 'submit-review-button' %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="back-to-products">
+    <%= link_to t('products.back_to_products'), products_path, class: "back-to-products-button" %>
+  </div>
 </div>

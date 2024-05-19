@@ -1,0 +1,9 @@
+<h1><%= action_name.capitalize %> Collection</h1>
+
+<%= form_with model: @collection, local: true do |form| %>
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+  <%= form.submit %>
+<% end %>

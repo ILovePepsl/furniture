@@ -1,33 +1,250 @@
-.orders-table, .products-table {
+/* orders.css */
+
+.orders-container,
+.order-detail-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.orders-container h1,
+.order-detail-container h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.orders-table,
+.products-table {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
+    margin-bottom: 20px;
 }
 
-.orders-table th, .orders-table td, .products-table th, .products-table td {
+.orders-table th,
+.orders-table td,
+.products-table th,
+.products-table td {
+    padding: 10px;
     border: 1px solid #ddd;
-    padding: 8px;
-}
-
-.orders-table th, .products-table th {
-    background-color: #f2f2f2;
     text-align: left;
 }
 
-.order-details {
-    margin-bottom: 20px;
+.orders-table th,
+.products-table th {
+    background-color: #f8f8f8;
+    font-weight: bold;
+}
+
+.orders-table td a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.orders-table td a:hover {
+    text-decoration: underline;
 }
 
 .button {
     display: inline-block;
-    padding: 8px 16px;
+    padding: 10px 20px;
+    font-size: 1.1em;
+    color: #fff;
     background-color: #007bff;
-    color: white;
     text-decoration: none;
-    border-radius: 4px;
-    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .button:hover {
     background-color: #0056b3;
+}
+
+.order-details p {
+    margin-bottom: 10px;
+}
+
+.order-details p strong {
+    font-weight: bold;
+}
+
+/* Статусы заказа */
+.status-in-processing {
+    color: #ffc107; /* Желтый для статуса "In processing" */
+}
+
+.status-completed {
+    color: #28a745; /* Зеленый для статуса "Completed" */
+}
+
+.status-cancelled {
+    color: #dc3545; /* Красный для статуса "Cancelled" */
+}
+
+/* Стили для кнопок на страницах заказов производителей */
+.orders-page .button, .order-details-page .button {
+    display: inline-block;
+    padding: 8px 15px;
+    font-size: 0.9em;
+    color: #fff;
+    background-color: #4CAF50; /* Зеленый цвет */
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s;
+    margin: 5px 0; /* Добавить небольшой отступ сверху и снизу */
+}
+
+.orders-page .button:hover, .order-details-page .button:hover {
+    background-color: #45a049;
+}
+
+.orders-page .update-button, .order-details-page .update-button {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 0.8em;
+    color: #fff;
+    background-color: #007bff; /* Синий цвет */
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s;
+    margin: 5px 0; /* Добавить небольшой отступ сверху и снизу */
+}
+
+.orders-page .update-button:hover, .order-details-page .update-button:hover {
+    background-color: #0056b3;
+}
+
+.orders-page .back-button, .order-details-page .back-button {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 0.8em;
+    color: #fff;
+    background-color: #f44336; /* Красный цвет */
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s;
+    margin: 5px 0; /* Добавить небольшой отступ сверху и снизу */
+}
+
+.orders-page .back-button:hover, .order-details-page .back-button:hover {
+    background-color: #d32f2f;
+}
+
+/* Стили для формы поиска на странице заказов производителей */
+.search-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-form label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.search-form .form-control {
+    flex: 1;
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-form .button {
+    padding: 8px 15px;
+    font-size: 0.9em;
+    color: #fff;
+    background-color: #007bff; /* Синий цвет */
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s;
+}
+
+.search-form .button:hover {
+    background-color: #0056b3;
+}
+
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+/* Дополнительные стили для кнопки сброса */
+.reset-button {
+    background-color: #6c757d;
+}
+
+.reset-button:hover {
+    background-color: #5a6268;
+}
+
+/* Стили для кнопок */
+.button {
+    padding: 8px 15px;
+    font-size: 0.9em;
+    color: #fff;
+    background-color: #007bff;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s;
+    margin: 5px 0;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+.orders-page .reset-button, .order-details-page .reset-button {
+    background-color: #6c757d;
+}
+
+.orders-page .reset-button:hover, .order-details-page .reset-button:hover {
+    background-color: #5a6268;
+}
+
+/* Стили для формы поиска */
+.search-form {
+    margin-bottom: 20px;
+}
+
+.search-form .form-control {
+    display: inline-block;
+    width: auto;
+    margin-right: 10px;
+}
+
+.reset-button {
+    background-color: #6c757d;
+}
+
+/* Стили для таблиц */
+.order-products-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.order-products-table th, .order-products-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.order-products-table th {
+    background-color: #f2f2f2;
 }

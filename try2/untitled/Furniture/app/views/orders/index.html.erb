@@ -1,28 +1,30 @@
-<h1><%= t('orders.index.title') %></h1>
+<div class="orders-container">
+  <h1><%= t('orders.index.title') %></h1>
 
-<% if @orders.empty? %>
-  <p><%= t('orders.index.no_orders') %></p>
-<% else %>
-  <table class="orders-table">
-    <thead>
-    <tr>
-      <th><%= t('orders.index.order_id') %></th>
-      <th><%= t('orders.index.total_price') %></th>
-      <th><%= t('orders.index.status') %></th>
-      <th><%= t('orders.index.date') %></th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @orders.each do |order| %>
+  <% if @orders.empty? %>
+    <p><%= t('orders.index.no_orders') %></p>
+  <% else %>
+    <table class="orders-table">
+      <thead>
       <tr>
-        <td><%= link_to order.id, order_path(order) %></td>
-        <td><%= number_to_currency(order.total_price) %></td>
-        <td><%= order.status %></td>
-        <td><%= order.created_at.strftime("%B %d, %Y") %></td>
+        <th><%= t('orders.index.order_id') %></th>
+        <th><%= t('orders.index.total_price') %></th>
+        <th><%= t('orders.index.status') %></th>
+        <th><%= t('orders.index.date') %></th>
       </tr>
-    <% end %>
-    </tbody>
-  </table>
-<% end %>
+      </thead>
+      <tbody>
+      <% @orders.each do |order| %>
+        <tr>
+          <td><%= link_to order.id, order_path(order) %></td>
+          <td><%= currency_symbol(current_user.currency) %><%= number_to_currency(convert_price(order.total_price), unit: '') %></td>
+          <td class="<%= "status-#{order.status.parameterize}" %>"><%= order.status %></td>
+          <td><%= order.created_at.strftime("%B %d, %Y") %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% end %>
 
-<%= link_to t('orders.index.back_to_main'), root_path, class: "button" %>
+  <%= link_to t('orders.index.back_to_main'), root_path, class: "button" %>
+</div>

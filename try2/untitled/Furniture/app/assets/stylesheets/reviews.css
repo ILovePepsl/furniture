@@ -1,0 +1,125 @@
+/* app/assets/stylesheets/reviews.css */
+
+/* Стили раздела отзывов */
+.reviews-section {
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.reviews-section h2 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.review {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.review-comment {
+    margin-bottom: 10px;
+    font-size: 0.9em;
+    color: #000000
+}
+
+.review-rating {
+    font-size: 1em;
+    color: #333; /* Черный цвет для текста "Rating:" */
+}
+
+.review-rating .rating-value {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.rating-1 { color: #ff0000; } /* Красный для 1 */
+.rating-2 { color: #ff4500; } /* Оранжево-красный для 2 */
+.rating-3 { color: #ffa500; } /* Оранжевый для 3 */
+.rating-4 { color: #ffd700; } /* Золотой для 4 */
+.rating-5 { color: #11aa11; } /* Зеленый для 5 */
+
+.delete-review-button {
+    color: #f44336;
+    font-size: 0.8em;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.delete-review-button:hover {
+    text-decoration: underline;
+}
+
+.review-form {
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.review-form .field {
+    margin-bottom: 15px;
+}
+
+.review-form .field label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.review-form .field input[type="number"], .review-form .field textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.submit-review-button {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.submit-review-button:hover {
+    background-color: #45a049;
+}
+
+/* Кнопка возврата к продуктам */
+.back-to-products-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1em;
+    color: #fff;
+    background-color: #007bff; /* Синий цвет */
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    margin-top: 20px;
+    visibility: visible; /* Видимый текст */
+}
+
+.back-to-products-button:hover {
+    background-color: #0056b3;
+}

@@ -1,0 +1,46 @@
+<div class="profile-container">
+  <h1 class="profile-heading"><%= t('profiles.edit_heading') %></h1>
+  <%= form_with(model: current_user, url: profile_path, local: true) do |form| %>
+    <!-- Существующие поля -->
+    <div class="form-group">
+      <%= form.label :name, t('profiles.name') %>
+      <%= form.text_field :name, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= form.label :avatar, t('profiles.avatar') %>
+      <%= form.file_field :avatar, class: 'form-control' %>
+    </div>
+
+    <!-- Новые поля для производителя -->
+    <% if current_user.manufacturer? %>
+      <div class="form-group">
+        <%= form.label :address, t('profiles.address') %>
+        <%= form.text_field :address, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= form.label :website, t('profiles.website') %>
+        <%= form.url_field :website, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= form.label :business_hours, t('profiles.business_hours') %>
+        <%= form.text_field :business_hours, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= form.label :mobile, t('profiles.mobile') %>
+        <%= form.telephone_field :mobile, class: 'form-control' %>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= form.label :currency, t('profiles.preferred_currency') %>
+      <%= form.select :currency, options_for_select([['Ukrainian Hryvnia (UAH)', 'UAH'], ['US Dollar (USD)', 'USD'], ['Euro (EUR)', 'EUR']], current_user.currency), class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :show_email, t('profiles.show_email') %>
+      <%= form.check_box :show_email, class: 'form-control' %>
+    </div>
+
+    <%= form.submit t('profiles.update_profile'), class: 'edit-profile-button' %>
+  <% end %>
+</div>

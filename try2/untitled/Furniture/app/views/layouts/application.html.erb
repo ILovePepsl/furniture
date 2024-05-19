@@ -6,35 +6,51 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
   <%= stylesheet_link_tag 'application', 'data-turbo-track': 'reload' %>
+  <%= stylesheet_link_tag 'products', 'data-turbo-track': 'reload' %>
+  <%= stylesheet_link_tag 'carts', 'data-turbo-track': 'reload' %>
+  <%= stylesheet_link_tag 'orders', 'data-turbo-track': 'reload' %>
+  <%= stylesheet_link_tag 'reviews', 'data-turbo-track': 'reload' %>
+  <%= stylesheet_link_tag 'wishlists', 'data-turbo-track': 'reload' %>
+  <%= stylesheet_link_tag 'collections', 'data-turbo-track': 'reload' %>
   <%= javascript_importmap_tags %>
 </head>
 <body>
-<div class="header">
+<div class="header main-header">
   <% if user_signed_in? %>
-    <div>
-      Logged in as: <%= current_user.email %>
-      <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
-      | <%= link_to 'My Orders', orders_path %>
-      | <%= link_to 'Cart', cart_path(current_user.cart) %>
+    <div class="user-info">
+      <span><%= t('navbar.logged_in_as') %> <%= current_user.email %></span>
+      <%= link_to t('navbar.my_orders'), orders_path, class: "button" %>
+      <%= link_to t('navbar.cart'), cart_path(current_user.cart), class: "button" %>
+      <%= link_to t('navbar.wishlist'), wishlist_path, class: "button" %>
+      <%= link_to t('navbar.collections'), collections_path, class: "button" %>
       <% if current_user.admin? %>
-        | <%= link_to 'Admin Panel', '/admin' %>
+        <%= link_to t('navbar.admin_panel'), '/admin', class: "button" %>
       <% end %>
+      <% if current_user.manufacturer? %>
+        <%= link_to t('navbar.manufacturer_orders'), manufacturers_orders_path, class: "button" %>
+      <% end %>
+      <%= link_to t('navbar.profile'), profile_path, class: "button" %>
+      <%= link_to t('navbar.logout'), destroy_user_session_path, method: :delete, class: "button logout-button" %>
     </div>
   <% else %>
-    <div>
-      <%= link_to 'Log in', new_user_session_path %> |
-      <%= link_to 'Sign up', new_user_registration_path %>
+    <div class="user-auth">
+      <%= link_to t('navbar.login'), new_user_session_path, class: "button" %>
+      <%= link_to t('navbar.signup'), new_user_registration_path, class: "button" %>
     </div>
   <% end %>
 
   <!-- Language Selector -->
   <div class="language-selector">
-    <%= link_to "English", locale: "en" %>
-    |
-    <%= link_to "Русский", locale: "ru" %>
+    <label for="language-select"><%= t('navbar.language') %>:</label>
+    <select id="language-select" onchange="window.location.href=this.value;">
+      <option value="<%= url_for(locale: 'en') %>" <%= 'selected' if I18n.locale == :en %>><%= t('navbar.english') %></option>
+      <option value="<%= url_for(locale: 'uk') %>" <%= 'selected' if I18n.locale == :uk %>><%= t('navbar.ukrainian') %></option>
+    </select>
   </div>
 </div>
 
-<%= yield %>
+<div class="content">
+  <%= yield %>
+</div>
 </body>
 </html>

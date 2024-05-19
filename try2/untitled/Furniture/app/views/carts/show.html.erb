@@ -1,58 +1,72 @@
-<h1><%= t('carts.show.title') %></h1>
+<div class="cart-container">
+  <p style="color: green"><%= notice %></p>
 
-<% if @cart.cart_products.exists? %>
-  <table>
-    <thead>
-    <tr>
-      <th><%= t('carts.show.product') %></th>
-      <th><%= t('carts.show.price') %></th>
-      <th><%= t('carts.show.quantity') %></th>
-      <th><%= t('carts.show.action') %></th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @cart.cart_products.each do |cart_product| %>
+  <h1><%= t('carts.show.title') %></h1>
+
+  <% if @cart.cart_products.exists? %>
+    <table>
+      <thead>
       <tr>
-        <td><%= cart_product.product.name %></td>
-        <td>$<%= cart_product.product.price %></td>
-        <td>
-          <%= form_with url: update_quantity_cart_path(@cart, product_id: cart_product.product.id), method: :patch, local: true do |f| %>
-            <%= f.number_field :quantity, value: cart_product.quantity, min: 1, class: "quantity-field" %>
-            <%= link_to t('carts.show.update'), '#', onclick: "this.closest('form').submit(); return false;", class: "update-link" %>
-          <% end %>
-        </td>
-        <td>
-          <%= link_to t('carts.show.remove'), remove_product_cart_path(@cart, product_id: cart_product.product.id), method: :delete %>
-        </td>
+        <th><%= t('carts.show.product') %></th>
+        <th><%= t('carts.show.price') %></th>
+        <th><%= t('carts.show.quantity') %></th>
+        <th><%= t('carts.show.action') %></th>
       </tr>
+      </thead>
+      <tbody>
+      <% @cart.cart_products.each do |cart_product| %>
+        <tr>
+          <td><%= cart_product.product.name %></td>
+          <td><%= currency_symbol(current_user.currency) %><%= number_to_currency(convert_price(cart_product.product.price), unit: '') %></td>
+          <td>
+            <%= form_with url: update_quantity_cart_path(@cart, product_id: cart_product.product.id), method: :patch, local: true do |f| %>
+              <%= f.number_field :quantity, value: cart_product.quantity, min: 1, class: "quantity-field" %>
+              <%= link_to t('carts.show.update'), '#', onclick: "this.closest('form').submit(); return false;", class: "update-link" %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to t('carts.show.remove'), remove_product_cart_path(@cart, product_id: cart_product.product.id), method: :delete %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <h3 class="total-price"><%= t('carts.show.total') %>: <%= currency_symbol(current_user.currency) %><%= number_to_currency(convert_price(@cart.cart_products.sum { |cp| cp.product.price * cp.quantity }), unit: '') %></h3>
+
+    <h2><%= t('carts.show.place_order') %></h2>
+    <%= form_with(model: Order.new, url: orders_path, class: "order-form") do |form| %>
+      <div>
+        <%= form.label :first_name, t('carts.show.first_name') %>
+        <%= form.text_field :first_name %>
+      </div>
+      <div>
+        <%= form.label :last_name, t('carts.show.last_name') %>
+        <%= form.text_field :last_name %>
+      </div>
+      <div>
+        <%= form.label :phone, t('carts.show.phone') %>
+        <%= form.telephone_field :phone %>
+      </div>
+      <div>
+        <%= form.label :address, t('carts.show.address') %>
+        <%= form.text_area :address %>
+      </div>
+      <div>
+        <%= form.label :user_start_date, t('carts.show.user_start_date') %>
+        <%= form.date_field :user_start_date, class: "calendar-input" %>
+      </div>
+      <div>
+        <%= form.label :user_end_date, t('carts.show.user_end_date') %>
+        <%= form.date_field :user_end_date, class: "calendar-input" %>
+      </div>
+      <%= form.submit t('carts.show.place_order_button') %>
     <% end %>
-    </tbody>
-  </table>
-
-  <h3><%= t('carts.show.total') %>: $<%= @cart.cart_products.sum { |cp| cp.product.price * cp.quantity } %></h3>
-
-  <h2><%= t('carts.show.place_order') %></h2>
-  <%= form_with(model: Order.new, url: orders_path) do |form| %>
-    <div>
-      <%= form.label :first_name, t('carts.show.first_name') %>
-      <%= form.text_field :first_name %>
-    </div>
-    <div>
-      <%= form.label :last_name, t('carts.show.last_name') %>
-      <%= form.text_field :last_name %>
-    </div>
-    <div>
-      <%= form.label :phone, t('carts.show.phone') %>
-      <%= form.telephone_field :phone %>
-    </div>
-    <div>
-      <%= form.label :address, t('carts.show.address') %>
-      <%= form.text_area :address %>
-    </div>
-    <%= form.submit t('carts.show.place_order_button') %>
+  <% else %>
+    <p class="empty-cart"><%= t('carts.show.empty_cart') %></p>
   <% end %>
-<% else %>
-  <p><%= t('carts.show.empty_cart') %></p>
-<% end %>
 
-<%= link_to t('carts.show.continue_shopping'), products_path, class: "button" %>
+  <div class="continue-shopping-container">
+    <%= link_to t('carts.show.continue_shopping'), products_path, class: "continue-shopping" %>
+  </div>
+</div>

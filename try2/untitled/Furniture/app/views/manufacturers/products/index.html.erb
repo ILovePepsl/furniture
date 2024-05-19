@@ -1,0 +1,85 @@
+<h1><%= @manufacturer.name %></h1>
+
+<div class="sort-search-options">
+  <div class="sort-options">
+    <label>Sort by Rating:</label>
+    <span class="sort-direction">
+      <%= link_to "▲", manufacturer_products_path(@manufacturer, order: 'asc', search: params[:search], page: params[:page]), class: "sort-link #{'active' if params[:order] == 'asc'}" %>
+      <%= link_to "▼", manufacturer_products_path(@manufacturer, order: 'desc', search: params[:search], page: params[:page]), class: "sort-link #{'active' if params[:order] == 'desc'}" %>
+    </span>
+  </div>
+
+  <div class="search-options">
+    <%= form_with(url: manufacturer_products_path(@manufacturer), method: :get, local: true) do %>
+      <%= text_field_tag :search, params[:search], placeholder: "Search by name", class: "search-field" %>
+      <%= submit_tag "Search", class: "search-button" %>
+    <% end %>
+  </div>
+</div>
+
+<div class="products-page">
+  <div class="categories-panel">
+    <h2>Категории</h2>
+    <div class="categories-navigation">
+      <%= link_to t('home'), root_path, class: "category-link#{' active' if params[:controller] == 'home'}" %>
+      <% Category.all.each do |category| %>
+        <%= link_to category.name, category_path(category), class: "category-link#{' active' if params[:controller] == 'categories' && params[:id].to_i == category.id}" %>
+      <% end %>
+    </div>
+
+    <h2>Manufacturers</h2>
+    <div class="categories-navigation">
+      <% User.where(role: 'manufacturer').each do |manufacturer| %>
+        <%= link_to manufacturer.name, manufacturer_products_path(manufacturer), class: "category-link#{' active' if params[:controller] == 'manufacturers/products' && params[:manufacturer_id].to_i == manufacturer.id}" %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="products-grid">
+    <% if user_signed_in? && current_user == @manufacturer %>
+      <div class="new-product-card" onclick="window.location='<%= new_product_path %>'">
+        <div class="new-product-circle">New</div>
+        <p>Click to create a new product</p>
+      </div>
+    <% end %>
+
+    <% @products.each do |product| %>
+      <div class="product-card">
+        <div class="product-header">
+          <h3><%= link_to product.name, product_path(product) %></h3>
+          <div class="product-rating">
+            <% average_rating = product.reviews.any? ? product.average_rating : '-' %>
+            <% review_count = product.reviews.count %>
+            <span class="rating-value"><%= average_rating %> ★</span>
+            <span class="rating-count">(<%= review_count %>)</span>
+          </div>
+        </div>
+        <p class="product-description"><%= product.description %></p>
+        <% if product.image.attached? %>
+          <div class="product-image">
+            <img src="<%= url_for(product.image) %>" alt="<%= product.name %>">
+          </div>
+        <% else %>
+          <p class="no-image"><%= t('products.no_image') %></p>
+        <% end %>
+        <div class="product-info">
+          <% if user_signed_in? %>
+            <% converted_price = convert_price(product.price) %>
+            <span class="product-price"><%= t('products.price') %>:<br><%= currency_symbol(current_user.currency) %><%= number_to_currency(converted_price, unit: '') %></span>
+          <% else %>
+            <span class="product-price"><%= t('products.price') %>:<br>₴<%= number_to_currency(product.price, unit: '') %></span>
+          <% end %>
+          <% if user_signed_in? %>
+            <%= button_to t('products.add_to_cart'), add_product_cart_path(current_user.cart), method: :post, params: { product_id: product.id }, class: "add-to-cart-button" %>
+          <% else %>
+            <%= link_to t('products.login_to_add'), new_user_session_path, class: "login-to-add-link" %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="pagination">
+  <%= paginate @products %>
+</div>

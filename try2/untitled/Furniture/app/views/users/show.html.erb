@@ -1,0 +1,61 @@
+<div class="profile-container <%= @user.role %>">
+  <h1 class="profile-heading"><%= @user.name %>'s <%= t('profiles.heading') %></h1>
+  <div>
+    <% if @user.avatar.attached? %>
+      <img src="<%= url_for(@user.avatar) %>" alt="<%= t('profiles.avatar_alt') %>" class="profile-avatar">
+    <% else %>
+      <img src="path_to_default_avatar.jpg" alt="<%= t('profiles.default_avatar_alt') %>" class="profile-avatar">
+    <% end %>
+  </div>
+  <table class="profile-table">
+    <tr>
+      <td><strong><%= t('profiles.name') %>:</strong></td>
+      <td><%= @user.name %></td>
+    </tr>
+    <% if @user.show_email %>
+      <tr>
+        <td><strong><%= t('profiles.email') %>:</strong></td>
+        <td><%= @user.email %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td><strong><%= t('profiles.role') %>:</strong></td>
+      <td><%= @user.role.titleize %></td>
+    </tr>
+    <tr>
+      <td><strong><%= t('profiles.created') %>:</strong></td>
+      <td><%= @user.created_at.strftime("%B %d, %Y") %></td>
+    </tr>
+    <% if @user.manufacturer? %>
+      <tr>
+        <td><strong><%= t('profiles.address') %>:</strong></td>
+        <td><%= @user.address %></td>
+      </tr>
+      <tr>
+        <td><strong><%= t('profiles.website') %>:</strong></td>
+        <td><%= link_to @user.website, @user.website %></td>
+      </tr>
+      <tr>
+        <td><strong><%= t('profiles.business_hours') %>:</strong></td>
+        <td><%= @user.business_hours %></td>
+      </tr>
+      <tr>
+        <td><strong><%= t('profiles.mobile') %>:</strong></td>
+        <td><%= @user.mobile %></td>
+      </tr>
+    <% end %>
+  </table>
+  <% if user_signed_in? && current_user != @user && @user.manufacturer? %>
+    <% if current_user.subscriptions.exists?(manufacturer: @user) %>
+      <%= button_to t('profiles.unsubscribe'), user_subscription_path(@user, current_user.subscriptions.find_by(manufacturer: @user)), method: :delete, class: 'button unsubscribe-button' %>
+    <% else %>
+      <%= button_to t('profiles.subscribe'), user_subscriptions_path(@user), method: :post, class: 'button subscribe-button' %>
+    <% end %>
+  <% end %>
+  <% if @user.manufacturer? %>
+    <div class="view-products-button-container">
+      <%= link_to t('profiles.view_products'), manufacturer_products_path(@user), class: 'view-products-button' %>
+    </div>
+  <% end %>
+  <%= link_to t('profiles.back_to_home'), root_path, class: 'back-to-home-button' %>
+</div>

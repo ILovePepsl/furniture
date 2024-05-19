@@ -1,0 +1,36 @@
+<h1>All Ordered Products</h1>
+
+<div class="order-products-page">
+  <%= form_with url: manufacturers_order_products_path, method: :get, local: true, class: "filter-form" do |form| %>
+    <%= form.label :status, "Filter by Status" %>
+    <%= form.select :status, options_for_select(OrderProduct::STATUSES, params[:status]), include_blank: true, class: "form-control" %>
+    <%= form.submit "Filter", class: "button" %>
+  <% end %>
+
+  <table class="order-products-table">
+    <thead>
+    <tr>
+      <th>Product Name</th>
+      <th>Quantity</th>
+      <th>Status</th>
+      <th>Order ID</th>
+      <th>Customer</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @order_products.each do |order_product| %>
+      <tr>
+        <td><%= order_product.product.name %></td>
+        <td><%= order_product.quantity %></td>
+        <td><%= order_product.status %></td>
+        <td><%= link_to order_product.order.id, manufacturers_order_path(order_product.order) %></td>
+        <td><%= order_product.order.user.email %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <%= paginate @order_products %>
+  </div>
+</div>

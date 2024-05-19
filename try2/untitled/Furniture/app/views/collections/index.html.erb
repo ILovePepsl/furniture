@@ -1,0 +1,36 @@
+<h1><%= t('collections.title') %></h1>
+<% if user_signed_in? && (current_user.admin? || current_user.manufacturer?) %>
+  <%= link_to t('collections.new'), new_collection_path, class: 'button' %>
+<% end %>
+
+<div class="collections">
+  <% @collections.each_slice(2) do |collection_row| %>
+    <div class="collection-row">
+      <% collection_row.each do |collection| %>
+        <div class="collection-card">
+          <h2><%= link_to collection.name, collection_path(collection), style: "color: #333; text-decoration: none;" %></h2>
+          <p><%= t('collections.by') %> <%= link_to collection.user.name, user_path(collection.user), style: "color: #{collection.text_color || '#333'};" %></p>
+          <div class="collection-products">
+            <% collection.products.limit(3).each do |product| %>
+              <div class="collection-product-card">
+                <% if product.image.attached? %>
+                  <img src="<%= url_for(product.image) %>" alt="<%= product.name %>">
+                <% else %>
+                  <p class="no-image"><%= t('products.no_image') %></p>
+                <% end %>
+                <div class="product-name"><%= link_to product.name, product_path(product), style: "color: #{collection.text_color || '#333'};" %></div>
+                <% converted_price = convert_price(product.price) %>
+                <span class="product-price"><%= t('products.price') %>:<br><%= currency_symbol(current_user.currency) %><%= number_to_currency(converted_price, unit: '') %></span>
+              </div>
+            <% end %>
+            <% if collection.products.size > 4 %>
+              <div class="more-products">
+                +<%= collection.products.size - 4 %> <%= t('collections.more_products') %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

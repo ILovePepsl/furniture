@@ -1,0 +1,48 @@
+<h1>Order ID: <%= @order.id %></h1>
+
+<div class="order-details order-details-page">
+  <p>Status: <%= @order.status %></p>
+  <p>Total Price: <%= currency_symbol(current_user.currency) %><%= number_to_currency(convert_price(@order.total_price), unit: '') %></p>
+  <p>Customer: <%= @order.user.email %></p>
+  <p>Address: <%= @order.address %></p>
+  <p>Phone: <%= @order.phone %></p>
+  <p>User's Preferred Dates: <%= @order.user_start_date %> to <%= @order.user_end_date %></p>
+</div>
+
+<h2>Products in this Order</h2>
+<table class="order-products-table">
+  <thead>
+  <tr>
+    <th>Product Name</th>
+    <th>Quantity</th>
+    <th>Status</th>
+    <th>Manufacturer's Estimated Dates</th>
+    <th>Change Status</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @order_products.each do |order_product| %>
+    <tr>
+      <td><%= order_product.product.name %></td>
+      <td><%= order_product.quantity %></td>
+      <td><%= order_product.status %></td>
+      <td>
+        <%= form_with(model: [ :manufacturers, order_product ], url: manufacturers_order_path(order_product), local: true, method: :patch) do |form| %>
+          <div>
+            <%= form.label :manufacturer_start_date, "Start Date" %>
+            <%= form.date_field :manufacturer_start_date, value: order_product.manufacturer_start_date %>
+          </div>
+          <div>
+            <%= form.label :manufacturer_end_date, "End Date" %>
+            <%= form.date_field :manufacturer_end_date, value: order_product.manufacturer_end_date %>
+          </div>
+          <%= form.select :status, OrderProduct::STATUSES, {}, class: 'form-control' %>
+          <%= form.submit 'Update', class: 'update-button' %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Back to Orders', manufacturers_orders_path, class: 'back-button' %>

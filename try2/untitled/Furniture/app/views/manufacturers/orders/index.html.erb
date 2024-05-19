@@ -1,0 +1,25 @@
+<h1>Your Customers</h1>
+
+<div class="orders-page">
+  <%= form_with url: manufacturers_orders_path, method: :get, local: true, class: "search-form" do |form| %>
+    <%= form.label :search, "Search Orders" %>
+    <%= form.text_field :search, value: params[:search], class: "form-control" %>
+    <%= form.submit "Search", class: "button" %>
+  <% end %>
+
+
+  <%= link_to "Reset Search", manufacturers_orders_path, class: "button reset-button" %>
+  <%= link_to "View All Order Products", manufacturers_order_products_path, class: "button view-all-button" %>
+
+  <% @users.each do |user| %>
+    <div class="user-card">
+      <h3><%= link_to user.email, orders_user_path(user) %></h3>
+    </div>
+  <% end %>
+
+  <div class="pagination">
+    <%= paginate @users %>
+  </div>
+
+
+</div>

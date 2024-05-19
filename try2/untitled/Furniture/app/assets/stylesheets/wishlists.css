@@ -1,0 +1,74 @@
+/* app/assets/stylesheets/wishlists.css */
+
+/* Стили для кнопок вишлиста */
+.add-to-cart-button, .remove-from-wishlist-button {
+    display: inline-block;
+    padding: 8px 15px;
+    font-size: 0.8em;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.add-to-cart-button {
+    color: #fff;
+    background-color: #4caf50; /* Зеленый цвет */
+}
+
+.add-to-cart-button:hover {
+    background-color: #45a049;
+}
+
+.remove-from-wishlist-button {
+    color: #fff;
+    background-color: #f44336; /* Красный цвет */
+    position: absolute; /* Позиционирование кнопки удаления */
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px; /* Уменьшенный размер кнопки */
+}
+
+.remove-from-wishlist-button:hover {
+    background-color: #d32f2f;
+}
+
+.wishlist-total {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.back-to-products-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1em;
+    color: #fff;
+    background-color: #007bff; /* Синий цвет */
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    margin-top: 20px;
+}
+
+.back-to-products-button:hover {
+    background-color: #0056b3;
+}
+
+/* Обновление карточки продукта для позиции кнопки удаления */
+.product-card {
+    position: relative; /* Для позиционирования кнопки удаления */
+    background-color: #fff;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: calc(25% - 20px); /* Уменьшили размер карточки товара */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

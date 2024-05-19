@@ -8,3 +8,9 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+
+categories = ['Chairs', 'Beds', 'Tables', 'Sofas', 'Cabinets', 'Other']
+categories.each do |name|
+  Category.find_or_create_by(name: name)
+end
+

@@ -95,6 +95,21 @@ class CartsController < ApplicationController
     end
   end
 
+  def add_all_from_collection
+    collection = Collection.find(params[:collection_id])
+    collection.products.each do |product|
+      cart_product = @cart.cart_products.find_or_initialize_by(product: product)
+      cart_product.quantity ||= 0
+      cart_product.quantity += 1
+      cart_product.save
+    end
+
+    respond_to do |format|
+      format.html { redirect_to cart_url(@cart), notice: 'All products from the collection added to your cart.' }
+      format.json { render :show, status: :ok, location: @cart }
+    end
+  end
+
   private
 
   def set_cart
@@ -104,4 +119,6 @@ class CartsController < ApplicationController
   def cart_params
     params.require(:cart).permit(:user_id, :completed)
   end
+
+
 end

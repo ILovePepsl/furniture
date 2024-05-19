@@ -1,0 +1,262 @@
+/* app/assets/stylesheets/collections.css */
+
+/* Определение переменных для цветов */
+:root {
+    --background-color: #f9f9f9;
+    --text-color: #333;
+    --card-background-color: #fff;
+    --price-color: #333;
+    --title-color: #333;
+}
+
+/* Основной контейнер */
+.collection-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--background-color);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: var(--text-color);
+}
+
+/* Заголовок коллекции */
+.collection-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.collection-header h1 {
+    font-size: 2em;
+    color: var(--title-color);
+}
+
+.collection-header .buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* Карточка продукта */
+.product-card {
+    background-color: var(--card-background-color);
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: calc(25% - 20px); /* Уменьшили размер карточки товара */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.product-card h3 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Добавляем стили для ссылок внутри h3 */
+.product-card h3 a {
+    color: var(--text-color); /* Цвет ссылки зависит от основного цвета текста */
+    text-decoration: none; /* Убираем подчеркивание */
+}
+
+.product-card h3 a:visited {
+    color: var(--text-color); /* Цвет для посещенных ссылок также зависит от основного цвета текста */
+}
+
+.product-card h3 a:hover {
+    color: var(--text-color); /* Цвет ссылки при наведении также зависит от основного цвета текста */
+}
+
+.product-card p {
+    font-size: 0.9em;
+    color: var(--text-color);
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.product-card .product-image {
+    margin-bottom: 10px;
+}
+
+.product-card .product-image img {
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+.product-card .product-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.product-price {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: var(--price-color);
+    margin-bottom: 10px;
+}
+
+/* Кнопки */
+.button {
+    display: inline-block;
+    padding: 8px 15px;
+    font-size: 0.9em;
+    color: #fff;
+    background-color: #4CAF50;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s;
+    margin: 5px 0;
+}
+
+.button:hover {
+    background-color: #45a049;
+}
+
+.delete-button {
+    background-color: #e74c3c;
+}
+
+.save-button {
+    background-color: #4CAF50
+}
+
+.reset-button {
+    background-color: #525252;
+    font-size: 0.8em;
+}
+
+.delete-button:hover {
+    background-color: #c0392b;
+}
+
+/* Форма добавления продукта */
+.add-product-form {
+    background-color: var(--card-background-color);
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.add-product-form h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+.add-product-form label {
+    font-size: 1em;
+    color: var(--text-color);
+}
+
+.add-product-form .form-control {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* app/assets/stylesheets/collections.css */
+
+/* Контейнер для рядов коллекций */
+.collection-row {
+    display: flex;
+    gap: 20px; /* Разрыв между карточками коллекций */
+    margin-bottom: 20px; /* Разрыв между рядами */
+}
+
+/* Карточки коллекций */
+.collection-card {
+    background-color: var(--card-background-color);
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex: 1; /* Карточка занимает половину ширины строки */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.collection-card h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.collection-card p {
+    font-size: 1em;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.collection-products {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+}
+
+.collection-product-card {
+    background-color: var(--card-background-color);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 150px; /* Фиксированная ширина карточки продукта */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.collection-product-card img {
+    max-width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.collection-product-card .product-name {
+    font-size: 0.9em;
+    color: var(--text-color);
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.collection-product-card .product-price {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: var(--price-color);
+    text-align: center;
+}
+
+.more-products {
+    background-color: var(--card-background-color);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 150px; /* Фиксированная ширина карточки продукта */
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 0.9em;
+    color: var(--text-color);
+    font-weight: bold;
+}
+
+

@@ -1,0 +1,23 @@
+<h1><%= @user.email %>'s Orders</h1>
+
+<div class="orders-page">
+  <%= form_with url: orders_user_path(@user), method: :get, local: true, class: "search-form" do |form| %>
+    <%= form.label :search, "Search by Order ID" %>
+    <%= form.number_field :search, value: params[:search], class: "form-control" %>
+    <%= form.submit "Search", class: "button" %>
+  <% end %>
+
+  <%= link_to "Reset Search", orders_user_path(@user), class: "button reset-button" %>
+
+  <% @orders.each do |order| %>
+    <div class="order-card">
+      <h3>Order ID: <%= link_to order.id, manufacturers_order_path(order) %></h3>
+      <p>Status: <%= order.status %></p>
+      <p>Total Price: <%= currency_symbol(current_user.currency) %><%= number_to_currency(convert_price(order.total_price), unit: '') %></p>
+    </div>
+  <% end %>
+
+  <div class="pagination">
+    <%= paginate @orders %>
+  </div>
+</div>

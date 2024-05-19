@@ -1,0 +1,61 @@
+<!-- app/views/profiles/show.html.erb -->
+<div class="profile-container <%= current_user.role %>">
+  <h1 class="profile-heading"><%= t('profiles.heading') %></h1>
+  <div>
+    <% if current_user.avatar.attached? %>
+      <img src="<%= url_for(current_user.avatar) %>" alt="<%= t('profiles.avatar_alt') %>" class="profile-avatar">
+    <% else %>
+      <img src="path_to_default_avatar.jpg" alt="<%= t('profiles.default_avatar_alt') %>" class="profile-avatar">
+    <% end %>
+  </div>
+  <table class="profile-table">
+    <tr>
+      <td><strong><%= t('profiles.name') %>:</strong></td>
+      <td><%= current_user.name %></td>
+    </tr>
+    <tr>
+      <td><strong><%= t('profiles.email') %>:</strong></td>
+      <td><%= current_user.email %></td>
+    </tr>
+    <tr>
+      <td><strong><%= t('profiles.role') %>:</strong></td>
+      <td><%= current_user.role.titleize %></td>
+    </tr>
+    <tr>
+      <td><strong><%= t('profiles.created') %>:</strong></td>
+      <td><%= current_user.created_at.strftime("%B %d, %Y") %></td>
+    </tr>
+    <tr>
+      <td><strong><%= t('profiles.currency') %>:</strong></td>
+      <td><%= current_user.currency %></td>
+    </tr>
+    <tr>
+      <td><strong><%= t('profiles.buy') %>:</strong></td>
+      <td><%= @exchange_rate.present? ? @exchange_rate['buy'] : t('profiles.na') %> UAH</td>
+    </tr>
+    <tr>
+      <td><strong><%= t('profiles.sell') %>:</strong></td>
+      <td><%= @exchange_rate.present? ? @exchange_rate['sale'] : t('profiles.na') %> UAH</td>
+    </tr>
+    <% if current_user.manufacturer? %>
+      <tr>
+        <td><strong><%= t('profiles.address') %>:</strong></td>
+        <td><%= current_user.address %></td>
+      </tr>
+      <tr>
+        <td><strong><%= t('profiles.website') %>:</strong></td>
+        <td><%= link_to current_user.website, current_user.website %></td>
+      </tr>
+      <tr>
+        <td><strong><%= t('profiles.business_hours') %>:</strong></td>
+        <td><%= current_user.business_hours %></td>
+      </tr>
+      <tr>
+        <td><strong><%= t('profiles.mobile') %>:</strong></td>
+        <td><%= current_user.mobile %></td>
+      </tr>
+    <% end %>
+  </table>
+  <%= link_to t('profiles.edit_profile'), edit_profile_path, class: 'edit-profile-button' %>
+  <%= link_to t('profiles.back_to_home'), root_path, class: 'back-to-home-button' %>
+</div>

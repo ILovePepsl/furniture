@@ -1,32 +1,43 @@
-<h1>Order Details</h1>
+<div class="order-detail-container">
+  <h1><%= t('orders.show.title') %></h1>
 
-<div class="order-details">
-  <p><strong>User:</strong> <%= @order.user.email %></p>
-  <p><strong>Total Price:</strong> <%= number_to_currency(@order.total_price) %></p>
-  <p><strong>Status:</strong> <%= @order.status %></p>
-  <p><strong>First Name:</strong> <%= @order.first_name %></p>
-  <p><strong>Last Name:</strong> <%= @order.last_name %></p>
-  <p><strong>Phone:</strong> <%= @order.phone %></p>
-  <p><strong>Address:</strong> <%= @order.address %></p>
-  <p><strong>Date:</strong> <%= @order.created_at.strftime("%B %d, %Y") %></p>
-</div>
+  <div class="order-details">
+    <p><strong><%= t('orders.show.user') %>:</strong> <%= @order.user.email %></p>
+    <p><strong><%= t('orders.show.total_price') %>:</strong> <%= number_to_currency(convert_price(@order.total_price), unit: current_user.currency) %></p>
+    <p><strong><%= t('orders.show.status') %>:</strong> <span class="<%= "status-#{@order.status.parameterize}" %>"><%= @order.status %></span></p>
+    <p><strong><%= t('orders.show.first_name') %>:</strong> <%= @order.first_name %></p>
+    <p><strong><%= t('orders.show.last_name') %>:</strong> <%= @order.last_name %></p>
+    <p><strong><%= t('orders.show.phone') %>:</strong> <%= @order.phone %></p>
+    <p><strong><%= t('orders.show.address') %>:</strong> <%= @order.address %></p>
+    <p><strong><%= t('orders.show.date') %>:</strong> <%= @order.created_at.strftime("%B %d, %Y") %></p>
+    <p><strong><%= t('orders.show.preferred_dates') %>:</strong> <%= @order.user_start_date %> to <%= @order.user_end_date %></p>
+  </div>
 
-<h2>Products in this Order</h2>
-<table class="products-table">
-  <thead>
-  <tr>
-    <th>Product Name</th>
-    <th>Quantity</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @order_products.each do |order_product| %>
+  <h2><%= t('orders.show.products_in_order') %></h2>
+  <table class="products-table">
+    <thead>
     <tr>
-      <td><%= order_product.product.name %></td>
-      <td><%= order_product.quantity %></td>
+      <th><%= t('orders.show.product_name') %></th>
+      <th><%= t('orders.show.quantity') %></th>
+      <th><%= t('orders.show.price') %></th>
+      <th><%= t('orders.show.status') %></th>
+      <th><%= t('orders.show.manufacturer_estimated_dates') %></th>
     </tr>
-  <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+    <% @order_products.each do |order_product| %>
+      <tr>
+        <td><%= order_product.product.name %></td>
+        <td><%= order_product.quantity %></td>
+        <td><%= currency_symbol(current_user.currency) %><%= number_to_currency(convert_price(order_product.product.price), unit: '') %></td>
+        <td><%= order_product.status %></td>
+        <td>
+          <%= order_product.manufacturer_start_date %> to <%= order_product.manufacturer_end_date %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
 
-<%= link_to 'Back to orders', orders_path, class: "button" %>
+  <%= link_to t('orders.show.back_to_orders'), orders_path, class: "button" %>
+</div>

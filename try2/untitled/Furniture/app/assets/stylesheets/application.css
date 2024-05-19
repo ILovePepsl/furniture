@@ -1,18 +1,530 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require_tree .
- *= require_self
- *= require authentication
- *= require products
+/* application.css */
 
- */
+/* Общие стили */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+/* Стили заголовка */
+.header.main-header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8em;
+}
+
+.user-info,
+.user-auth {
+    display: flex;
+    align-items: center;
+}
+
+.user-info span {
+    margin-right: 15px;
+}
+
+.header.main-header .button {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-right: 10px;
+    font-size: 0.8em;
+    color: #fff;
+    background-color: #4caf50; /* Зеленый цвет */
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+}
+
+.header.main-header .button:hover {
+    background-color: #45a049;
+}
+
+.header.main-header .logout-button {
+    background-color: #f44336; /* Красный цвет */
+}
+
+.header.main-header .logout-button:hover {
+    background-color: #d32f2f;
+}
+
+/* Языковой селектор */
+.language-selector {
+    display: flex;
+    align-items: center;
+}
+
+.language-selector select {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    font-size: 0.8em;
+    color: #333;
+}
+
+/* Стили контента */
+.content {
+    padding: 20px;
+}
+
+/* Стили страницы продуктов */
+.products-page {
+    display: flex;
+}
+
+.categories-panel {
+    width: 200px;
+    margin-right: 20px;
+    background-color: #fff;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.categories-panel h2 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.categories-navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.category-link {
+    display: block;
+    padding: 5px 10px;
+    font-size: 0.9em;
+    color: #007bff;
+    background-color: #e9ecef;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.category-link:hover {
+    background-color: #cfe2ff;
+}
+
+.category-link.active {
+    font-weight: bold;
+    background-color: #007bff;
+    color: #fff;
+}
+
+.products-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    flex: 1;
+}
+
+.product-card {
+    background-color: #fff;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: calc(25% - 20px); /* Уменьшили размер карточки товара */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.product-card h3 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #000; /* Черный цвет для названия товаров */
+}
+
+.product-card .product-description {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.product-card .product-image {
+    margin-bottom: 10px;
+}
+
+.product-card .product-image img {
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+.product-card .product-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.product-price {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #333;
+}
+
+.add-to-cart-button {
+    display: inline-block;
+    padding: 8px 15px; /* Уменьшили размер кнопки */
+    font-size: 0.8em;
+    color: #fff;
+    background-color: #4caf50; /* Зеленый цвет */
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+}
+
+/* application.css */
+
+/* Стили страницы продуктов */
+.add-to-cart-button {
+    display: inline-block;
+    padding: 8px 15px; /* Уменьшили размер кнопки */
+    font-size: 0.8em;
+    color: #fff;
+    background-color: #4caf50; /* Зеленый цвет */
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    margin-right: 10px; /* Добавить отступ справа */
+    vertical-align: middle; /* Выравнивание по вертикали */
+}
+
+.add-to-cart-button:hover {
+    background-color: #45a049;
+}
+
+.add-to-wishlist-button {
+    display: inline-block;
+    padding: 8px 15px;
+    font-size: 0.8em;
+    color: #fff;
+    background-color: #ff69b4; /* Розовый цвет для кнопки добавления в список желаний */
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    vertical-align: middle; /* Выравнивание по вертикали */
+}
+
+.add-to-wishlist-button:hover {
+    background-color: #ff1493; /* Более темный розовый при наведении */
+}
+
+.login-to-add-link {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.login-to-add-link:hover {
+    text-decoration: underline;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination a,
+.pagination span {
+    padding: 6px 10px;
+    margin: 0 3px;
+    font-size: 0.9em;
+    color: #007bff;
+    text-decoration: none;
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+}
+
+.pagination a:hover,
+.pagination span:hover {
+    background-color: #f5f5f5;
+}
+
+.pagination .current {
+    font-weight: bold;
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* profiles.css */
+.profile-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border: 1px solid #e6e6e6;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.profile-heading {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.profile-field {
+    font-size: 16px;
+    margin-bottom: 15px;
+    color: #666;
+}
+
+.profile-label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 20px auto;
+    display: block;
+}
+
+.edit-profile-button {
+    display: block;
+    width: max-content;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    margin: 20px auto;
+    text-decoration: none;
+}
+
+.edit-profile-button:hover {
+    background-color: #0056b3;
+}
+
+/* profiles.css */
+.edit-profile-form {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border: 1px solid #e6e6e6;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.edit-profile-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.edit-profile-form input[type="text"],
+.edit-profile-form input[type="file"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.edit-profile-form input[type="submit"] {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.edit-profile-form input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.profile-table {
+    width: 100%;
+    max-width: 600px; /* Подгоните под размер вашего контейнера */
+    border-collapse: collapse;
+}
+
+.profile-table td {
+    padding: 8px;
+    vertical-align: top; /* Выравнивание по верхнему краю */
+    text-align: left; /* Выравнивание текста во всех ячейках по левому краю */
+}
+
+.profile-table td:first-child {
+    font-weight: bold;
+    padding-right: 10px; /* Уменьшенный отступ между колонками */
+    width: 10%; /* Фиксированная ширина для названий полей */
+}
+
+.view-products-button-container {
+    text-align: center; /* Центрирование кнопки */
+    margin-top: 20px; /* Отступ сверху */
+}
+
+.view-products-button {
+    display: inline-block;
+    padding: 8px 16px; /* Меньший размер кнопки */
+    background-color: #28a745; /* Зеленый цвет */
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.view-products-button:hover {
+    background-color: #218838; /* Темнее при наведении */
+}
+
+/* Цвета фона для разных ролей */
+.profile-container.manufacturer {
+    background-color: #e8f5e9; /* Светло-зеленый для производителя */
+}
+
+.profile-container.customer {
+    background-color: #e3f2fd; /* Светло-голубой для обычного пользователя */
+}
+
+.profile-container.admin {
+    background-color: #ffebee; /* Светло-красный для администратора */
+}
+
+.form-container {
+    max-width: 360px; /* Определите максимальную ширину формы */
+    margin: 20px auto; /* Центрирование формы */
+    padding: 20px; /* Отступы внутри формы */
+    background: #f9f9f9; /* Фоновый цвет формы */
+    border: 1px solid #ccc; /* Граница формы */
+    border-radius: 5px; /* Скругление углов */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Тень формы */
+    box-sizing: border-box; /* Учитывает padding и border в ширине и высоте */
+}
+
+.field {
+    margin-bottom: 15px; /* Отступы между полями */
+}
+
+.field label {
+    display: block; /* Лейблы на новой строке */
+    margin-bottom: 5px; /* Отступ между лейблом и полем ввода */
+}
+
+.field input[type="email"],
+.field input[type="password"],
+.field input[type="text"] {
+    width: 100%; /* Ширина поля ввода */
+    padding: 10px; /* Отступы внутри поля ввода */
+    border: 1px solid #ccc; /* Граница поля */
+    border-radius: 4px; /* Скругление углов поля */
+    box-sizing: border-box; /* Учитывает padding и border в ширине и высоте */
+}
+
+.actions {
+    text-align: center; /* Центрирование кнопок */
+}
+
+.actions input[type="submit"] {
+    padding: 10px 15px; /* Паддинги кнопки */
+    color: white; /* Цвет текста */
+    background-color: #5cb85c; /* Фоновый цвет кнопки */
+    border: none; /* Убрать стандартную границу */
+    border-radius: 4px; /* Скругление углов */
+    cursor: pointer; /* Курсор в виде указателя */
+}
+
+.actions input[type="submit"]:hover {
+    background-color: #4cae4c; /* Темнее при наведении */
+}
+
+.links {
+    margin-top: 20px;
+}
+
+.links a {
+    display: block; /* Отображение ссылок как блоки */
+    margin-bottom: 10px; /* Отступ между ссылками */
+}
+
+.manufacturer-link {
+    display: block;
+    margin-bottom: 10px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.manufacturer-link:hover {
+    text-decoration: underline;
+}
+
+.new-product-card {
+    background-color: #e8f5e9; /* Светло-зеленый цвет для кнопки */
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: calc(25% - 20px); /* Размер карточки товара */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative; /* Для позиционирования круга */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.new-product-card:hover {
+    background-color: #d4e8d9;
+}
+
+.new-product-circle {
+    background-color: #28a745; /* Цвет круга */
+    color: #fff;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    position: absolute; /* Позиционирование круга */
+    top: 20px; /* Отступ сверху */
+    right: 20px; /* Отступ справа */
+}
+
+
+.field input[type="number"], .field textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+

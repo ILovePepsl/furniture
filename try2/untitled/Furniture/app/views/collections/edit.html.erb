@@ -1,0 +1,35 @@
+<h1><%= t("collections.#{action_name}") %> <%= t('collections.collection') %></h1>
+
+<%= form_with model: @collection, local: true do |form| %>
+  <div>
+    <%= form.label :name, t('collections.name') %>
+    <%= form.text_field :name %>
+  </div>
+  <div>
+    <%= form.label :background_color, t('collections.background_color') %>
+    <%= form.color_field :background_color, value: @collection.background_color || '#f9f9f9' %>
+  </div>
+  <div>
+    <%= form.label :text_color, t('collections.text_color') %>
+    <%= form.color_field :text_color, value: @collection.text_color || '#333333' %>
+  </div>
+  <div>
+    <%= form.label :title_color, t('collections.title_color') %>
+    <%= form.color_field :title_color, value: @collection.title_color || '#333333' %>
+  </div>
+  <div>
+    <%= form.label :product_card_background_color, t('collections.product_card_background_color') %>
+    <%= form.color_field :product_card_background_color, value: @collection.product_card_background_color || '#ffffff' %>
+  </div>
+  <div>
+    <%= form.label :product_description_color, t('collections.product_description_color') %>
+    <%= form.color_field :product_description_color, value: @collection.product_description_color || '#666666' %>
+  </div>
+  <div>
+    <%= form.label :product_price_color, t('collections.product_price_color') %>
+    <%= form.color_field :product_price_color, value: @collection.product_price_color || '#333333' %>
+  </div>
+  <%= form.submit t('collections.save_changes'), class: 'button save-button'%>
+<% end %>
+
+<%= button_to t('collections.reset_colors'), collection_path(@collection, reset_colors: true), method: :patch, class: 'button reset-button' %>

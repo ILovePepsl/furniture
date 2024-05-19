@@ -1,0 +1,40 @@
+/* home.css */
+
+.header {
+    background-color: #f8f8f8;
+    padding: 10px 20px;
+    text-align: center;
+    border-bottom: 1px solid #e7e7e7;
+}
+
+.header div {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.header a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.header a:hover {
+    text-decoration: underline;
+}
+
+.language-selector {
+    float: right;
+    padding: 10px 0;
+}
+
+.main-content {
+    padding: 20px;
+    text-align: center;
+}
+
+.welcome-banner {
+    background-color: #007bff;
+    color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
